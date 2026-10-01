@@ -1,0 +1,84 @@
+@startuml
+skinparam monochrome true
+skinparam style strictuml
+skinparam classBackgroundColor White
+skinparam backgroundColor White
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+class FabricaFactory {
+  + obterFabrica(tipoSeguro : String) : FabricaAbstrata
+}
+
+class NumeradorApolice {
+  - instance : NumeradorApolice
+  - ano : String
+  - ultimoNumero : int
+  - NumeradorApolice()
+  + getInstance() : NumeradorApolice
+  + gerarNumero() : String
+}
+
+class Segurado {
+  - numeroApolice : String
+  + emitirApolice() : String
+  + emitirVistoria() : String
+  + getNumeroApolice() : String
+}
+
+interface FabricaAbstrata <<interface>> {
+}
+
+class FabricaAuto {
+}
+
+class FabricaResidencial {
+}
+
+class FabricaViagem {
+}
+
+interface Apolice <<interface>> {
+}
+
+class ApoliceAuto {
+}
+
+class ApoliceResidencial {
+}
+
+class ApoliceViagem {
+}
+
+interface Vistoria <<interface>> {
+}
+
+class VistoriaAuto {
+}
+
+class VistoriaResidencial {
+}
+
+FabricaFactory ..> FabricaAbstrata
+Segurado ..> FabricaAbstrata
+Segurado ..> NumeradorApolice
+Segurado --> "1" Apolice
+Segurado --> "1" Vistoria
+NumeradorApolice --> "1" NumeradorApolice : instance
+
+FabricaAbstrata <|.. FabricaAuto
+FabricaAbstrata <|.. FabricaResidencial
+
+Apolice <|.. ApoliceAuto
+Apolice <|.. ApoliceResidencial
+Apolice <|.. ApoliceViagem
+
+Vistoria <|.. VistoriaAuto
+Vistoria <|.. VistoriaResidencial
+
+FabricaAuto ..> ApoliceAuto
+FabricaAuto ..> VistoriaAuto
+FabricaResidencial ..> ApoliceResidencial
+FabricaResidencial ..> VistoriaResidencial
+FabricaViagem ..> ApoliceViagem
+@enduml
